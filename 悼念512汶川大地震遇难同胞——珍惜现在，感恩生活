@@ -1,0 +1,43 @@
+#include<stdio.h>
+#include<string.h>
+#include<stdlib.h>
+#include<algorithm>
+#include<string.h>
+using namespace std;
+int main()
+{
+	int w[2100];
+	int v[2100];
+	int s[2100];
+	int t, n,m;
+	while (scanf("%d", &t) != EOF)
+	{
+		while (t--) {
+			scanf("%d%d", &n, &m);
+			int cnt = 0;
+			for (int i = 0; i < m; i++) {
+				int a, b, c;
+				scanf("%d%d%d", &a, &b, &c);
+				int d = 1;
+				while (c - d > 0) {
+					w[cnt] = d * a;
+					v[cnt] = d * b;
+					c = c - d;
+					cnt++;
+					d *= 2;
+				}
+				w[cnt] = c * a;
+				v[cnt] = c * b;
+				cnt++;
+			}
+			memset(s, 0, sizeof(s));
+			for (int i = 0; i < cnt; i++){
+				for (int k = n; k >= w[i]; k--) {
+					s[k] = max(s[k], s[k - w[i]] + v[i]);
+				}
+			}
+			printf("%d\n", s[n]);
+		}
+	}
+	return 0;
+}
